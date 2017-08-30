@@ -24,13 +24,20 @@ const PostgisSource = function PostgisSource(uri, callback) {
   const xml = map.toXML();
   this._pool = mapnikPool.fromString(xml);
 
+  const extent = datasource.extent();
+  const center = [(extent[2] - extent[0])/2 + extent[0], extent[3] - extent[1])/2 + extent[1], 6],
+
   this._info = {
     id: tableName,
     name: tableName,
     format: 'pbf',
     scheme: 'tms',
-    bounds: datasource.extent(),
-    fields: datasource.fields()
+    center: center,
+    bounds: extent,
+    vector_layers: [{
+      id: tableName,
+      fields: datasource.fields()
+    }]
   };
 
   callback(null, this);
