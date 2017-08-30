@@ -25,7 +25,7 @@ const PostgisSource = function PostgisSource(uri, callback) {
   this._pool = mapnikPool.fromString(xml);
 
   const extent = datasource.extent();
-  const center = [(extent[2] - extent[0])/2 + extent[0], (extent[3] - extent[1])/2 + extent[1], 6],
+  const center = [(extent[2] - extent[0])/2 + extent[0], (extent[3] - extent[1])/2 + extent[1], 6];
 
   this._info = {
     id: tableName,
