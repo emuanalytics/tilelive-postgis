@@ -11,8 +11,10 @@ const srs = '+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y
 const PostgisSource = function PostgisSource(uri, callback) {
   const options = parse(uri);
 
-  const { tableName } = options;
+  const { tableName, minZoom, maxZoom } = options;
   delete options.tableName;
+  delete options.minZoom;
+  delete options.maxZoom;
 
   const datasource = new mapnik.Datasource(options);
   const layer = new mapnik.Layer(tableName);
@@ -34,6 +36,8 @@ const PostgisSource = function PostgisSource(uri, callback) {
     scheme: 'tms',
     center: center,
     bounds: extent,
+    minzoom: minZoom? +minZoom : 0,
+    maxzoom: maxZoom? +maxZoom : 18,
     vector_layers: [{
       id: tableName,
       fields: datasource.fields()
